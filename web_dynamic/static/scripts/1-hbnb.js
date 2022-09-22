@@ -1,13 +1,10 @@
-$( document ).ready(function() {
-  var amenities = [];
-  $('li :checkbox').change(function() {
+$(document).ready(function () {
+  const amenities = [];
+  $('li :checkbox').change(function () {
     if (this.checked) {
-      console.log(this);
-      $(amenities).append($(this).attr('data-id'));
-      console.log(amenities);
-    }
-    else {
-      amenities.remove($(this).attr('data-id'))
+      amenities.push($(this).attr('data-id'));
+    } else {
+      amenities.splice($.inArray($(this).attr('data-id'), amenities), 1);
     }
   });
 });
