@@ -12,6 +12,31 @@ $(document).ready(function () {
     $('.amenities h4').html(amenitiesNames.join(', '));
   });
 
+  const states = [];
+  const statesNames = [];
+  $('h2 :checkbox').change(function () {
+    console.log($(this));
+    if (this.checked) {
+      states.push($(this).data('id'));
+      statesNames.push($(this).attr('data-name'));
+    } else {
+      states.splice($.inArray($(this).attr('data-id'), states), 1);
+      statesNames.splice($.inArray($(this).attr('data-name'), statesNames), 1);
+    }
+    $('.locations h4').html(String(statesNames));
+    console.log(states);
+  })
+
+  const cities = [];
+  $('.cities :checkbox').change(function () {
+    if (this.checked) {
+      cities.push($(this).attr('data-id'));
+    } else {
+      cities.splice($.inArray($(this).attr('data-id'), cities), 1);
+    }
+    console.log(cities);
+  })
+
   $.get('http://0.0.0.0:5001/api/v1/status/', function (data) {
     if (data.status === 'OK') {
       $('#api_status').addClass('available');
@@ -19,15 +44,19 @@ $(document).ready(function () {
       $('#api_status').removeClass('available');
     }
   });
-
+  console.log('hallo')
   $('.filters button').click(function () {
+  console.log('rrrhallo')
     $.ajax({
       url: 'http://0.0.0.0:5001/api/v1/places_search/',
       type: 'POST',
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
-      data: JSON.stringify({"amenities": amenities}),
+      data: JSON.stringify({"states": states, "cities": cities, "amenities": amenities}),
       success: function (data) {
+        console.log(states);
+        console.log(cities);
+        console.log(amenities);
         $('section.places').empty();
         data.forEach(function (place) {
           let html = '';
