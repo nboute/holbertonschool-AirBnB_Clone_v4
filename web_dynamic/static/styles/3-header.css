@@ -1,11 +1,25 @@
 header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    justify-items: space-evenly;
     background: white;
     height: 70px;
     width: 100%;
     border-bottom: 1px solid #CCCCCC;
 }
 header .logo {
+    display: flex;
     background: url("../images/logo.png") no-repeat;
     left: 20px;
     height: 100%;
+}
+header #api_status {
+    display: flex;
+    height: 40px;
+    width: 40px;
+    align-items: center;
+    border-radius: 50%;
+    margin-right: 30px;
+    background-color: #cccccc;
 }
