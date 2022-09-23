@@ -1,7 +1,8 @@
 $(document).ready(function () {
   const amenities = [];
   const amenitiesNames = [];
-  $('li :checkbox').change(function () {
+  $('.amenities li :checkbox').change(function () {
+    console.log('watthefuk');
     if (this.checked) {
       amenities.push($(this).attr('data-id'));
       amenitiesNames.push($(this).attr('data-name'));
@@ -15,27 +16,27 @@ $(document).ready(function () {
   const states = [];
   const statesNames = [];
   $('h2 :checkbox').change(function () {
-    console.log($(this));
     if (this.checked) {
-      states.push($(this).data('id'));
+      states.push($(this).attr('data-id'));
       statesNames.push($(this).attr('data-name'));
     } else {
       states.splice($.inArray($(this).attr('data-id'), states), 1);
       statesNames.splice($.inArray($(this).attr('data-name'), statesNames), 1);
     }
-    $('.locations h4').html(String(statesNames));
-    console.log(states);
-  })
+    $('.locations h4').html(statesNames.join(', '));
+  });
 
   const cities = [];
   $('.cities :checkbox').change(function () {
     if (this.checked) {
       cities.push($(this).attr('data-id'));
+      statesNames.push($(this).attr('data-name'));
     } else {
       cities.splice($.inArray($(this).attr('data-id'), cities), 1);
+      statesNames.splice($.inArray($(this).attr('data-name'), statesNames), 1);
     }
-    console.log(cities);
-  })
+    $('.locations h4').html(statesNames.join(', '));
+  });
 
   $.get('http://0.0.0.0:5001/api/v1/status/', function (data) {
     if (data.status === 'OK') {
@@ -44,19 +45,14 @@ $(document).ready(function () {
       $('#api_status').removeClass('available');
     }
   });
-  console.log('hallo')
   $('.filters button').click(function () {
-  console.log('rrrhallo')
     $.ajax({
       url: 'http://0.0.0.0:5001/api/v1/places_search/',
       type: 'POST',
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
-      data: JSON.stringify({"states": states, "cities": cities, "amenities": amenities}),
+      data: JSON.stringify({ states: states, cities: cities, amenities: amenities }),
       success: function (data) {
-        console.log(states);
-        console.log(cities);
-        console.log(amenities);
         $('section.places').empty();
         data.forEach(function (place) {
           let html = '';
@@ -92,6 +88,5 @@ $(document).ready(function () {
         });
       }
     });
-  })
-
+  });
 });

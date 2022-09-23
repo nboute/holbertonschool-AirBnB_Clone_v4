@@ -108,3 +108,11 @@ button:hover {
     height: 16px;
     overflow: hidden;
 }
+
+.locations h4 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    height: 16px;
+    width: 65%;
+    overflow: hidden;
+}

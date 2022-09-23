@@ -26,7 +26,7 @@ $(document).ready(function () {
       type: 'POST',
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
-      data: JSON.stringify({"amenities": amenities}),
+      data: JSON.stringify({ amenities: amenities }),
       success: function (data) {
         $('section.places').empty();
         data.forEach(function (place) {
@@ -63,6 +63,5 @@ $(document).ready(function () {
         });
       }
     });
-  })
-
+  });
 });
