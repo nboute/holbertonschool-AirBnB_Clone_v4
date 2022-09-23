@@ -44,6 +44,7 @@ $(document).ready(function () {
       $('#api_status').removeClass('available');
     }
   });
+
   $('.filters button').click(function () {
     $.ajax({
       url: 'http://0.0.0.0:5001/api/v1/places_search/',
@@ -77,15 +78,39 @@ $(document).ready(function () {
           }
           html += '</div>';
           html += '      </div>';
-          html += '      <div class="user">';
-          html += '          </div>';
           html += '          <div class="description">';
           html += '        ' + place.description;
+          html += '          </div>';
+          html += '          <div class="reviews">';
+          html += '          <h2>Reviews</h2>';
+          html += '          <span loaded="false" data-id=' + place.id + '>Show</span>';
+          html += '          <ul>';
+          html += '          </ul>';
           html += '          </div>';
           html += '    </article>';
           $('section.places').append($(html));
         });
       }
     });
+  });
+  $(document).on('click', '.reviews span', function () {
+    if ($(this).text() === 'Hide') {
+      $(this).next().addClass('hide');
+      $(this).text('Show');
+    } else {
+      $(this).text('Hide');
+      $(this).next().removeClass('hide');
+      if ($(this).attr('loaded') === 'false') {
+        const html = [];
+        const ul = $(this).next();
+        $(this).attr('loaded', 'true');
+        $.get('http://0.0.0.0:5001/api/v1/places/' + $(this).attr('data-id') + '/reviews', function (data) {
+          data.forEach(function (review) {
+            html.push('<li>' + review.text + '</li>');
+          });
+          $(ul).append(html.join(''));
+        });
+      }
+    }
   });
 });
