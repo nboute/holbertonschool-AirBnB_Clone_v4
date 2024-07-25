@@ -2,7 +2,11 @@
 
 ## Overview
 This project is designed to create a dynamic web application that mimics some functionalities of AirBnB. The main focus is on using JavaScript, particularly jQuery, to interact with a custom API and manipulate the DOM dynamically.
+
 All instructions mentionned here refer to the Holberton School project's tasks. They are already implemented in the project.
+
+![Project Graph](https://s3.eu-west-3.amazonaws.com/hbtn.intranet.project.files/concepts/74/hbnb_step5.png)
+
 ## Tasks
 
 ### 0. Last clone!
